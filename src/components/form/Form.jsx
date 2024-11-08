@@ -87,7 +87,9 @@ function Form({ setIsEdit, isEdit }) {
         <option value="complete">Complete</option>
         <option value="incomplete">InComplete</option>
       </select>
-      <Button type="submit">{isEdit ? "Update" : "Add"}</Button>
+      <Button type="submit" className={"w-full"}>
+        {isEdit ? "Update" : "Add a new task"}
+      </Button>
     </form>
   );
 }

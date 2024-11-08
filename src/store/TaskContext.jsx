@@ -10,6 +10,8 @@ const parseTasks = (tasks) =>
   }));
 
 export const TasksProvider = ({ children }) => {
+    const [isEdit, setIsEdit] = useState();
+
   const [tasks, setTasks] = useState(() => {
     // Load tasks from localStorage
     const storedTasks = localStorage.getItem("tasks");
@@ -18,7 +20,15 @@ export const TasksProvider = ({ children }) => {
 
   const [currentUser, setCurrentUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  // Fetch tasks from the API
+  const fetchTasks = async () => {
+    try {
+      const response = await api.fetchTasks();
+      setTasks(response.data);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
   // Load tasks for the current user when they log in
   useEffect(() => {
     if (currentUser) {
@@ -113,6 +123,8 @@ export const TasksProvider = ({ children }) => {
         login,
         signup,
         logout,
+        isEdit,
+        setIsEdit,
       }}
     >
       {children}

@@ -1,7 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html {
+/* html {
     scroll-behavior: smooth;
     background-color: #414f63;
+} */
+.background{
+    background-image: url('./assets/Design.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+}
+.main-background{
+    background-image: url('./assets/image.png');
+    background-size: cover;
+    /* background-repeat: no-repeat; */
+    background-position: center;
 }
