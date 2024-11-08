@@ -13,9 +13,10 @@ import { TasksProvider, TasksContext } from "./store/TaskContext";
 import { useContext, useState } from "react";
 import Button from "./components/form/Button";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  // const navigate = useNavigate();
   return (
     <TasksProvider>
       <Router>
@@ -40,6 +41,7 @@ function App() {
           />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
+        <ToastContainer position="top-right" autoClose={3000} />
       </Router>
     </TasksProvider>
   );
@@ -51,7 +53,8 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const FormPage = () => {
-  const { isAuthenticated, logout, setIsEdit, isEdit } = useContext(TasksContext);
+  const { isAuthenticated, logout, setIsEdit, isEdit } =
+    useContext(TasksContext);
   const navigate = useNavigate();
 
   return (
@@ -82,8 +85,9 @@ const FormPage = () => {
 };
 
 const TaskListPage = () => {
-  const { isAuthenticated, logout, setIsEdit, isEdit } = useContext(TasksContext);
-  
+  const { isAuthenticated, logout, setIsEdit, isEdit } =
+    useContext(TasksContext);
+
   const navigate = useNavigate();
 
   return (

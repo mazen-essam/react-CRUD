@@ -2,6 +2,8 @@ import Input from "./Input";
 import Button from "./Button";
 import { useContext, useState, useEffect } from "react";
 import { TasksContext } from "../../store/TaskContext";
+import { toast } from "react-toastify";
+
 function Form({ setIsEdit, isEdit }) {
   const { tasks, addTask, editTask } = useContext(TasksContext);
 
@@ -39,6 +41,7 @@ function Form({ setIsEdit, isEdit }) {
     setName("");
     setDes("");
     setDate("");
+    toast.success("Task added successfully");
   };
   return (
     <form action="" onSubmit={handleSubmit}>

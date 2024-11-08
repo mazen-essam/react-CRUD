@@ -1,5 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import {
+  loginApi,
+  signupApi,
+  addTaskApi,
+  editTaskApi,
+  deleteTaskApi,
+  fetchTasksApi,
+} from "./Api";
 
 export const TasksContext = createContext();
 
@@ -10,7 +18,7 @@ const parseTasks = (tasks) =>
   }));
 
 export const TasksProvider = ({ children }) => {
-    const [isEdit, setIsEdit] = useState();
+  const [isEdit, setIsEdit] = useState();
 
   const [tasks, setTasks] = useState(() => {
     // Load tasks from localStorage
@@ -55,6 +63,7 @@ export const TasksProvider = ({ children }) => {
       status: isComplete,
       date: new Date(date),
     };
+    addTaskApi(newTask);
     setTasks([...tasks, newTask]);
   };
 
@@ -66,6 +75,18 @@ export const TasksProvider = ({ children }) => {
     updatedStatus,
     updatedDate
   ) => {
+    // editTaskApi(
+    //   tasks.map((task) => task.id === id && id),
+    //   tasks.map(
+    //     (task) =>
+    //       task.id === id && {
+    //         name: updatedName,
+    //         description: updatedDescription,
+    //         status: updatedStatus,
+    //         date: new Date(updatedDate),
+    //       }
+    //   )
+    // );
     setTasks(
       tasks.map((task) =>
         task.id === id

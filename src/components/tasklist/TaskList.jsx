@@ -3,16 +3,32 @@ import Button from "../form/Button";
 import { TasksContext } from "../../store/TaskContext";
 import ViewModal from "./ViewModal";
 import { useNavigate } from "react-router-dom";
+import DeleteModal from "./DeleteModal";
+import { toast } from "react-toastify";
 
 function TaskList({ setIsEdit }) {
   const { tasks, deleteTask } = useContext(TasksContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // Control DeleteModal visibility
   const [selectedTask, setSelectedTask] = useState(null);
   const navigate = useNavigate();
 
   const handleViewClick = (task) => {
     setSelectedTask(task);
     setIsModalOpen(true);
+  };
+
+  const handleDeleteClick = (task) => {
+    setSelectedTask(task);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedTask) {
+      deleteTask(selectedTask.id);
+      setIsDeleteModalOpen(false);
+      toast.error("Task deleted successfully!");
+    }
   };
 
   const handleEdit = (task) => {
@@ -71,7 +87,7 @@ function TaskList({ setIsEdit }) {
                 </span>
               </p>
               <p className="text-sm md:text-base lg:text-lg">
-                {task.date.toDateString()}
+                {new Date(task.date).toDateString()}
               </p>
             </div>
             <div className="flex gap-2 md:gap-4 lg:gap-6 xl:gap-8 items-center md:items-start">
@@ -83,7 +99,7 @@ function TaskList({ setIsEdit }) {
               </Button>
               <Button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 md:py-2 md:px-4 rounded text-xs md:text-sm lg:text-base"
-                onClick={() => deleteTask(task.id)}
+                onClick={() => handleDeleteClick(task)}
               >
                 Delete
               </Button>
@@ -101,6 +117,11 @@ function TaskList({ setIsEdit }) {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         task={selectedTask}
+      />
+      <DeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        deleteTask={handleConfirmDelete}
       />
     </div>
   );
